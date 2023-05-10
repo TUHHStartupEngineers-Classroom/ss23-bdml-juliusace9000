@@ -29,6 +29,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           ref: gh-pages
+          render: false
 
       - name: Install staticrypt
         run: sudo npm install -g staticrypt
