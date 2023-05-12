@@ -91,6 +91,7 @@ transaction_tbl <- read_excel(path  = "breakfast_at_the_frat.xlsx",
 
 orderlines_tbl <- transaction_tbl %>% 
   left_join(products_tbl) %>% 
+  left_join(stores_tbl, by = c("STORE_NUM" = "STORE_ID"))
   
   # 1.1 Get Customer Trends ----
 customer_trends_tbl <- orderlines_tbl %>%
@@ -247,19 +248,12 @@ cluster_trends_tbl <- customer_trends_tbl %>%
   left_join(umap_kmeans_3_results_tbl) %>%
   ### continued in pipe part 2 ###
   
-  ?quantile
-customer_trends_tbl %>%
-  pull(PRICE) %>%
-  quantile(probs = c(0, 0.33, 0.66, 1))
-##   0%  33%  66% 100% 
-## 1.30 2.77 4.05 7.50 
-
-# pipe part 2
-mutate(price_bin = case_when(
-  PRICE <= 2.77 ~ "low",
-  PRICE <= 4.05 ~ "medium",
-  TRUE ~ "high"
-))  %>%
+  # pipe part 2
+  mutate(price_bin = case_when(
+    PRICE <= 2.77 ~ "low",
+    PRICE <= 4.05 ~ "medium",
+    TRUE ~ "high"
+  ))  %>%
   
   
   # pipe part 3
