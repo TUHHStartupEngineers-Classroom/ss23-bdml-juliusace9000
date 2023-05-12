@@ -18,17 +18,90 @@ library(yardstick)
 library(rpart.plot)
 
 bike_orderlines_tbl <- readRDS("bike_orderlines.rds")
+bike_features_tbl <- readRDS("bike_features_tbl.rds")
 
-?recipe
-?step_dummy
-?prep
-?bake
+library(recipes)
 
-recipe_obj <- recipe(...) %>% 
-                step_rm(...) %>% 
-                step_dummy(... ) %>% # Check out the argument one_hot = T
-                prep()
+# Create a recipe object
+bike_recipe <- recipe(total_sales ~ frame_material + category_2, data = model_sales_tbl)
 
-train_transformed_tbl <- bake(..., ...)
-test_transformed_tbl  <- bake(..., ...)
+# Specify the data manipulation steps
+bike_recipe <- bike_recipe %>%
+  step_dummy(frame_material, category_2) %>%
+  step_center(all_predictors()) %>%
+  step_scale(all_predictors())
+
+# Fit the recipe on the data
+bike_recipe <- prep(bike_recipe, training = model_sales_tbl)
+
+# run both following commands at the same time
+set.seed(seed = 1113)
+split_obj <- rsample::initial_split(bike_features_tbl, prop   = 0.80, 
+                                                       strata = "category_2")
+
+# Check if testing contains all category_2 values
+split_obj %>% training() %>% distinct(category_2)
+split_obj %>% testing() %>% distinct(category_2)
+
+# Assign training and test data
+train_tbl <- training(split_obj)
+test_tbl  <- testing(split_obj)
+
+train_transformed_tbl <- bake(bike_recipe, new_data = train_tbl)
+test_transformed_tbl <- bake(bike_recipe, new_data = test_tbl)
+
+model_sales_tbl <- bike_orderlines_tbl %>%
+    select(total_price, model, category_2, frame_material) %>%
+    
+    group_by(model, category_2, frame_material) %>%
+    summarise(total_sales = sum(total_price)) %>%
+    ungroup() %>%
+    
+    arrange(desc(total_sales))
+
+model_sales_tbl %>%
+    mutate(category_2 = as_factor(category_2) %>% 
+               fct_reorder(total_sales, .fun = max) %>% 
+               fct_rev()) %>%
+    
+    ggplot(aes(frame_material, total_sales)) +
+    geom_violin() +
+    geom_jitter(width = 0.1, alpha = 0.5, color = "#2c3e50") +
+    #coord_flip() +
+    facet_wrap(~ category_2) +
+    scale_y_continuous(labels = scales::dollar_format(scale = 1e-6, suffix = "M", accuracy = 0.1)) +
+    tidyquant::theme_tq() +
+    labs(
+        title = "Total Sales for Each Model",
+        x = "Frame Material", y = "Revenue"
+    )
+
+
+# Create a recipe object
+bike_recipe <- recipe(total_sales ~ frame_material + category_2, data = model_sales_tbl)
+
+# Specify the data manipulation steps
+bike_recipe <- bike_recipe %>%
+  step_dummy(frame_material, category_2) %>%
+  step_center(all_predictors()) %>%
+  step_scale(all_predictors())
+
+# Fit the recipe on the data
+bike_recipe <- prep(bike_recipe, training = model_sales_tbl)
+
+# Apply the recipe to the data
+bike_features_tbl_processed <- bake(bike_recipe, new_data = bike_features_tbl)
+
+# Check the modified bike_features_tbl_processed
+glimpse(bike_features_tbl_processed)
+
+# Create the train dataset
+
+library(rsample)
+
+# Set the seed for reproducibility
+train_transformed_tbl <- bake(bike_recipe, new_data = train_data)
+
+# Create the test dataset
+test_transformed_tbl <- bake(bike_recipe, new_data = test_data)
 ```
