@@ -1,0 +1,34 @@
+# Challenge 2 - Supervised ML
+
+```{r}
+# Standard
+library(tidyverse)
+
+# Modeling
+library(parsnip)
+
+# Preprocessing & Sampling
+library(recipes)
+library(rsample)
+
+# Modeling Error Metrics
+library(yardstick)
+
+# Plotting Decision Trees
+library(rpart.plot)
+
+bike_orderlines_tbl <- readRDS("bike_orderlines.rds")
+
+?recipe
+?step_dummy
+?prep
+?bake
+
+recipe_obj <- recipe(...) %>% 
+                step_rm(...) %>% 
+                step_dummy(... ) %>% # Check out the argument one_hot = T
+                prep()
+
+train_transformed_tbl <- bake(..., ...)
+test_transformed_tbl  <- bake(..., ...)
+```
