@@ -3,7 +3,7 @@
 ```{r}
 # Standard
 library(tidyverse)
-
+library(workflows)
 # Modeling
 library(parsnip)
 
@@ -47,4 +47,19 @@ test_tbl  <- testing(split_obj)
 train_transformed_tbl <- bake(bike_recipe, new_data = train_tbl)
 test_transformed_tbl <- bake(bike_recipe, new_data = test_tbl)
 glimpse(bike_features_tbl_processed)
+
+model_01_linear_lm_simple <- linear_reg(mode = "regression") %>%
+    set_engine("lm") %>%
+    fit(price ~ category_2 + frame_material, data = train_transformed_tbl)
+
+
+# Create a workflow object
+my_workflow <- workflow() %>%
+  add_recipe(bike_recipe) %>%
+  add_model(model_01_linear_lm_simple)
+# Fit the workflow to the training data
+fitted_workflow <- fit(my_workflow, data = train_transformed_tbl)
+# Predict using the fitted workflow on the test data
+predictions <- predict(fitted_workflow, new_data = test_transformed_tbl)
+
 ```
