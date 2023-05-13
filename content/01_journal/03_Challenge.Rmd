@@ -12,8 +12,30 @@ dept_job_role_tbl %>%
   ungroup() %>%
 
   # Block 2
-  group_by(Department, JobRole) %>%
-  mutate(pct = n / sum(n)) %>%
+# Function to convert counts to percentages. 
+count_to_pct <- function(data, ..., col = n) {
+
+  # capture the dots
+  grouping_vars_expr <- quos(...)
+  col_expr <- enquo(col)
+
+  ret <- data %>%
+    group_by(!!! grouping_vars_expr) %>%
+    mutate(pct = (!! col_expr) / sum(!! col_expr)) %>%
+    ungroup()
+
+  return(ret)
+
+}
+
+# This is way shorter and more flexibel
+dept_job_role_tbl %>%
+  count(JobRole, Attrition) %>%
+  count_to_pct(JobRole)
+  
+dept_job_role_tbl %>%
+  count(Department, JobRole, Attrition) %>%
+  count_to_pct(Department, JobRole)  
   ungroup() %>%
 
   # Block 3
