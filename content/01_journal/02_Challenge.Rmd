@@ -19,7 +19,14 @@ library(rpart.plot)
 
 bike_orderlines_tbl <- readRDS("bike_orderlines.rds")
 bike_features_tbl <- readRDS("bike_features_tbl.rds")
-
+model_sales_tbl <- bike_orderlines_tbl %>%
+    select(total_price, model, category_2, frame_material) %>%
+    
+    group_by(model, category_2, frame_material) %>%
+    summarise(total_sales = sum(total_price)) %>%
+    ungroup() %>%
+    
+    arrange(desc(total_sales))
 library(recipes)
 bike_recipe <- recipe(total_sales ~ frame_material + category_2, data = model_sales_tbl)
 
@@ -46,13 +53,14 @@ test_tbl  <- testing(split_obj)
 
 train_transformed_tbl <- bake(bike_recipe, new_data = train_tbl)
 test_transformed_tbl <- bake(bike_recipe, new_data = test_tbl)
+bike_features_tbl_processed <- bake(bike_recipe, new_data = bike_features_tbl)
 glimpse(bike_features_tbl_processed)
 
-model_01_linear_lm_simple <- linear_reg(mode = "regression") %>%
-    set_engine("lm") %>%
-    fit(price ~ category_2 + frame_material, data = train_transformed_tbl)
+#model_01_linear_lm_simple <- linear_reg(mode = "regression") %>%
+#    set_engine("lm") %>%
+#    fit(price ~ category_2 + frame_material, data = train_transformed_tbl)
 
-
+model <- lm(price ~ category_2 + frame_material, data = train_transformed_tbl)
 # Create a workflow object
 my_workflow <- workflow() %>%
   add_recipe(bike_recipe) %>%
