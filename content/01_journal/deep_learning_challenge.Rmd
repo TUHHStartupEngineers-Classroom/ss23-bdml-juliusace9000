@@ -1,3 +1,7 @@
+#Final Challenge
+
+At first, the data has to be loaded.
+
 ```{r}
 
 library(tidyverse)
@@ -8,5 +12,51 @@ library(recipes)
 library(yardstick)
 library(corrr)
 
+churn_data_raw <- read_csv("WA_Fn-UseC_-Telco-Customer-Churn.csv")
 
+glimpse(churn_data_raw)
+```
+Then the data gets pruned.
+```{r}
+# Prune the data
+churn_data_tbl <- churn_data_raw %>%
+  # Remove the "customerID" column
+  select(-customerID) %>%
+  # Remove rows with NA values in "TotalCharges" column
+  drop_na(TotalCharges) %>%
+  # Move the target column to the first position
+  select(Churn, everything())
+
+# View the resulting table
+head(churn_data_tbl)
+
+```
+The dataset is split into a test and a training set.
+```{r}
+# Split test/training sets
+set.seed(69)
+train_test_split <- initial_split(churn_data_tbl, prop = 0.8)
+train_test_split
+
+# Retrieve train and test sets
+train_tbl <- training(train_test_split)
+test_tbl  <- testing(train_test_split)
+```
+```{r}
+churn_data_tbl %>% ggplot(aes(x = tenure)) + 
+  geom_histogram(bins = 6, color = "white", fill =  "#2DC6D6") +
+  labs(
+    title = "Tenure Counts With Six Bins",
+    x     = "tenure (month)"
+  )
+
+train_tbl %>%
+    select(Churn, TotalCharges) %>%
+    mutate(
+        Churn = Churn %>% as.factor() %>% as.numeric(),
+        LogTotalCharges = log(TotalCharges)
+        ) %>%
+    correlate() %>%
+    focus(Churn) %>%
+    fashion()
 ```
