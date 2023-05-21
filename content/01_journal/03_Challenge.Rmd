@@ -1,58 +1,7 @@
 # Automated ML
 ##Business Case
 ```{r}
-employee_attrition_tbl <- read_csv("datasets-1067-1925-WA_Fn-UseC_-HR-Employee-Attrition.csv")
 
-# Business & Data Understanding: Department and Job Role
-
-# Data subset
-dept_job_role_tbl %>%
-
-  count(Department, JobRole, Attrition)
-  ungroup() %>%
-
-  # Block 2
-# Function to convert counts to percentages. 
-count_to_pct <- function(data, ..., col = n) {
-
-  # capture the dots
-  grouping_vars_expr <- quos(...)
-  col_expr <- enquo(col)
-
-  ret <- data %>%
-    group_by(!!! grouping_vars_expr) %>%
-    mutate(pct = (!! col_expr) / sum(!! col_expr)) %>%
-    ungroup()
-
-  return(ret)
-
-}
-
-# This is way shorter and more flexibel
-dept_job_role_tbl %>%
-  count(JobRole, Attrition) %>%
-  count_to_pct(JobRole)
-  
-dept_job_role_tbl %>%
-  count(Department, JobRole, Attrition) %>%
-  count_to_pct(Department, JobRole)  
-  ungroup() %>%
-
-  # Block 3
-  filter(Attrition %in% "Yes") %>%
-  arrange(desc(pct)) %>%
-  mutate(
-    above_industry_avg = case_when(
-      pct > 0.088 ~ "Yes",
-      TRUE ~ "No"
-    )
-  ) %>%
-
-  # Block 4. Set salaray to 80000 for now
-  mutate(
-    cost_of_attrition = calculate_attrition_cost(n = n, salary = 80000)
-  )
-# Function to calculate attrition cost
 calculate_attrition_cost <- function(
 
   # Employee
@@ -94,6 +43,39 @@ calculate_attrition_cost <- function(
 
 }
 
+library(tidyverse)
+employee_attrition_tbl <- read_csv("datasets-1067-1925-WA_Fn-UseC_-HR-Employee-Attrition.csv")
+
+# Business & Data Understanding: Department and Job Role
+dept_job_role_tbl <- employee_attrition_tbl %>%
+  select(EmployeeNumber, Department, JobRole, PerformanceRating, Attrition)
+
+
+dept_job_role_tbl %>%
+
+  # Block 1
+  group_by(Department, JobRole, Attrition) %>%
+  summarize(n = n()) %>%
+  ungroup() %>%
+
+  # Block 2
+  group_by(Department, JobRole) %>%
+  mutate(pct = n / sum(n)) %>%
+  ungroup() %>%
+
+  # Block 3
+  filter(Attrition %in% "Yes") %>%
+  arrange(desc(pct)) %>%
+  mutate(
+    above_industry_avg = case_when(
+      pct > 0.088 ~ "Yes",
+      TRUE ~ "No"
+    )
+  )
+
+
 calculate_attrition_cost()
 calculate_attrition_cost(200)
+
+
 ```
