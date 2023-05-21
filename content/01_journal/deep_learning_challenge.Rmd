@@ -272,4 +272,31 @@ corrr_analysis <- x_train_tbl %>%
     arrange(abs(Churn)) %>%
     mutate(feature = as_factor(feature)) 
 corrr_analysis
+
+# Correlation visualization
+corrr_analysis %>%
+  ggplot(aes(x = ..., y = fct_reorder(..., desc(...)))) +
+  geom_point() +
+  
+  # Positive Correlations - Contribute to churn
+  geom_segment(aes(xend = ..., yend = ...), 
+               color = "red", 
+               data = corrr_analysis %>% filter(... > ...)) +
+  geom_point(color = "red", 
+             data = corrr_analysis %>% filter(... > ...)) +
+  
+  # Negative Correlations - Prevent churn
+  geom_segment(aes(xend = 0, yend = feature), 
+               color = "#2DC6D6", 
+               data = ... +
+  geom_point(color = "#2DC6D6", 
+             data = ... +
+  
+  # Vertical lines
+  geom_vline(xintercept = 0, color = "#f1fa8c", size = 1, linetype = 2) +
+  geom_vline( ... ) +
+  geom_vline( ... ) +
+  
+  # Aesthetics
+  labs( ... )
 ```
