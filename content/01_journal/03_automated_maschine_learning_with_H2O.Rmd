@@ -621,7 +621,6 @@ typeof(automl_models_h2o)
 slotNames(automl_models_h2o)
 automl_models_h2o@leaderboard
 automl_models_h2o@leader
-
 # Depending on the algorithm, the output will be different
 h2o.getModel("StackedEnsemble_AllModels_4_AutoML_1_20230520_153140")
 
@@ -644,12 +643,12 @@ automl_models_h2o@leaderboard %>%
   h2o.getModel()
   h2o.saveModel(path = "")
 #h2o.getModel("StackedEnsemble_AllModels_4_AutoML_1_20230520_153140") %>% 
-#  h2o.saveModel(path = "04_Modeling/h20_models/")
+#  h2o.saveModel(path = "")
 
-h2o.loadModel("04_Modeling/h20_models/StackedEnsemble_AllModels_4_AutoML_1_20230520_153140")
+h2o.loadModel("StackedEnsemble_AllModels_4_AutoML_1_20230520_153140")
 
 # Choose whatever model you want
-stacked_ensemble_h2o <- h2o.loadModel("04_Modeling/h20_models/StackedEnsemble_AllModels_4_AutoML_1_20230520_153140")
+stacked_ensemble_h2o <- h2o.loadModel("StackedEnsemble_AllModels_4_AutoML_1_20230520_153140")
 stacked_ensemble_h2o
 
 predictions <- h2o.predict(stacked_ensemble_h2o, newdata = as.h2o(test_tbl))
@@ -659,7 +658,7 @@ typeof(predictions)
 
 predictions_tbl <- predictions %>% as_tibble()
 
-deep_learning_h2o <- h2o.loadModel("04_Modeling/h20_models/StackedEnsemble_AllModels_4_AutoML_1_20230520_153140")
+deep_learning_h2o <- h2o.loadModel("StackedEnsemble_AllModels_4_AutoML_1_20230520_153140")
 
 # To see all possible parameters
 #?h2o.deeplearning
@@ -738,5 +737,5 @@ leader_model <- automl_models_h2o@leaderboard %>%
 predictions <- h2o.predict(leader_model, newdata = as.h2o(test_tbl))
 
 #6. Save the leader model
-leader_model %>% h2o.saveModel(path = "04_Modeling/h20_models/")
+leader_model %>% h2o.saveModel(path = "")
 ```
