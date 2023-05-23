@@ -1,6 +1,6 @@
 ---
 title: "Automated Maschine Learning with H2O"
-author: "Christian Sühl"
+author: "Julius von Sulecki"
 output:
   html_document:
     toc: TRUE
@@ -642,7 +642,7 @@ extract_h2o_model_name_by_position <- function(h2o_leaderboard, n = 1, verbose =
 automl_models_h2o@leaderboard %>% 
   extract_h2o_model_name_by_position(6) %>% 
   h2o.getModel()
-
+  h2o.saveModel(path = "")
 #h2o.getModel("StackedEnsemble_AllModels_4_AutoML_1_20230520_153140") %>% 
 #  h2o.saveModel(path = "04_Modeling/h20_models/")
 

@@ -1,6 +1,6 @@
 ---
 title: "Performance Measures"
-author: "Christian Sühl"
+author: "Julius von Sulecki"
 output:
   html_document:
     toc: TRUE
@@ -8,7 +8,7 @@ output:
 ---
 
 # Business Case
-I had to move the business case to performance_measures_business_case.Rmd since otherwise multiple errors with h2o would occur.
+The business case is not uploaded because it does not run without error messages.
 
 # Challenge
 ## Data loading and running AutoML 
