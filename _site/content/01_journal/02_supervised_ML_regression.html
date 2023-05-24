@@ -213,60 +213,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   
 
 </header><p>The second challenge/businesscase</p>
-<div class="cell" data-hash="02_supervised_ML_regression_cache/html/unnamed-chunk-1_beeeca3d7e5e0c63bf3f1f9aaa5d04fd">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Standard</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>#&gt; -- Attaching core tidyverse packages ------------------------ tidyverse 2.0.0 --
-#&gt; v dplyr     1.1.2     v readr     2.1.4
-#&gt; v forcats   1.0.0     v stringr   1.5.0
-#&gt; v ggplot2   3.4.2     v tibble    3.2.1
-#&gt; v lubridate 1.9.2     v tidyr     1.3.0
-#&gt; v purrr     1.0.1     
-#&gt; -- Conflicts ------------------------------------------ tidyverse_conflicts() --
-#&gt; x dplyr::filter() masks stats::filter()
-#&gt; x dplyr::lag()    masks stats::lag()
-#&gt; i Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># Modeling</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="fu">library</span>(parsnip)</span>
-<span id="cb3-3"><a href="#cb3-3"></a></span>
-<span id="cb3-4"><a href="#cb3-4"></a><span class="co"># Preprocessing &amp; Sampling</span></span>
-<span id="cb3-5"><a href="#cb3-5"></a><span class="fu">library</span>(recipes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>#&gt; 
-#&gt; Attaching package: 'recipes'
-#&gt; 
-#&gt; The following object is masked from 'package:stringr':
-#&gt; 
-#&gt;     fixed
-#&gt; 
-#&gt; The following object is masked from 'package:stats':
-#&gt; 
-#&gt;     step</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">library</span>(rsample)</span>
-<span id="cb5-2"><a href="#cb5-2"></a></span>
-<span id="cb5-3"><a href="#cb5-3"></a><span class="co"># Modeling Error Metrics</span></span>
-<span id="cb5-4"><a href="#cb5-4"></a><span class="fu">library</span>(yardstick)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>#&gt; 
-#&gt; Attaching package: 'yardstick'
-#&gt; 
-#&gt; The following object is masked from 'package:readr':
-#&gt; 
-#&gt;     spec</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># Plotting Decision Trees</span></span>
-<span id="cb7-2"><a href="#cb7-2"></a><span class="fu">library</span>(rpart.plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>#&gt; Loading required package: rpart</code></pre>
-</div>
+<div class="cell" data-hash="02_supervised_ML_regression_cache/html/unnamed-chunk-1_2980f3aca506fd7c834aeff4d274f6e2">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(parsnip)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">library</span>(recipes)</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="fu">library</span>(rsample)</span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="fu">library</span>(yardstick)</span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="fu">library</span>(rpart.plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-hash="02_supervised_ML_regression_cache/html/unnamed-chunk-2_6b1383284f58bc477b5ab3ecc13a0a43">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># Modeling ----------------------------------------------------------------</span></span>
-<span id="cb9-2"><a href="#cb9-2"></a>bike_orderlines_tbl <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"bike_orderlines.rds"</span>)</span>
-<span id="cb9-3"><a href="#cb9-3"></a><span class="fu">glimpse</span>(bike_orderlines_tbl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># Modeling ----------------------------------------------------------------</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>bike_orderlines_tbl <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"bike_orderlines.rds"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="fu">glimpse</span>(bike_orderlines_tbl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; Rows: 15,644
 #&gt; Columns: 18
@@ -289,34 +247,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 #&gt; $ lat            &lt;dbl&gt; 53.57532, 53.57532, 53.07379, 53.07379, 48.78234, 48.78~
 #&gt; $ lng            &lt;dbl&gt; 10.015340, 10.015340, 8.826754, 8.826754, 9.180819, 9.1~</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>model_sales_tbl <span class="ot">&lt;-</span> bike_orderlines_tbl <span class="sc">%&gt;%</span></span>
-<span id="cb11-2"><a href="#cb11-2"></a>  <span class="fu">select</span>(total_price, model, category_2, frame_material) <span class="sc">%&gt;%</span></span>
-<span id="cb11-3"><a href="#cb11-3"></a>  </span>
-<span id="cb11-4"><a href="#cb11-4"></a>  <span class="fu">group_by</span>(model, category_2, frame_material) <span class="sc">%&gt;%</span></span>
-<span id="cb11-5"><a href="#cb11-5"></a>  <span class="fu">summarise</span>(<span class="at">total_sales =</span> <span class="fu">sum</span>(total_price)) <span class="sc">%&gt;%</span></span>
-<span id="cb11-6"><a href="#cb11-6"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb11-7"><a href="#cb11-7"></a>  </span>
-<span id="cb11-8"><a href="#cb11-8"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(total_sales))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>model_sales_tbl <span class="ot">&lt;-</span> bike_orderlines_tbl <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>  <span class="fu">select</span>(total_price, model, category_2, frame_material) <span class="sc">%&gt;%</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a>  </span>
+<span id="cb4-4"><a href="#cb4-4"></a>  <span class="fu">group_by</span>(model, category_2, frame_material) <span class="sc">%&gt;%</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a>  <span class="fu">summarise</span>(<span class="at">total_sales =</span> <span class="fu">sum</span>(total_price)) <span class="sc">%&gt;%</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a>  </span>
+<span id="cb4-8"><a href="#cb4-8"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(total_sales))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>#&gt; `summarise()` has grouped output by 'model', 'category_2'. You can override
 #&gt; using the `.groups` argument.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>model_sales_tbl <span class="sc">%&gt;%</span></span>
-<span id="cb13-2"><a href="#cb13-2"></a>  <span class="fu">mutate</span>(<span class="at">category_2 =</span> <span class="fu">as_factor</span>(category_2) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-3"><a href="#cb13-3"></a>           <span class="fu">fct_reorder</span>(total_sales, <span class="at">.fun =</span> max) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-4"><a href="#cb13-4"></a>           <span class="fu">fct_rev</span>()) <span class="sc">%&gt;%</span></span>
-<span id="cb13-5"><a href="#cb13-5"></a>  </span>
-<span id="cb13-6"><a href="#cb13-6"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(frame_material, total_sales)) <span class="sc">+</span></span>
-<span id="cb13-7"><a href="#cb13-7"></a>  <span class="fu">geom_violin</span>() <span class="sc">+</span></span>
-<span id="cb13-8"><a href="#cb13-8"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">color =</span> <span class="st">"#2c3e50"</span>) <span class="sc">+</span></span>
-<span id="cb13-9"><a href="#cb13-9"></a>  <span class="co">#coord_flip() +</span></span>
-<span id="cb13-10"><a href="#cb13-10"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> category_2) <span class="sc">+</span></span>
-<span id="cb13-11"><a href="#cb13-11"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">dollar_format</span>(<span class="at">scale =</span> <span class="fl">1e-6</span>, <span class="at">suffix =</span> <span class="st">"M"</span>, <span class="at">accuracy =</span> <span class="fl">0.1</span>)) <span class="sc">+</span></span>
-<span id="cb13-12"><a href="#cb13-12"></a>  tidyquant<span class="sc">::</span><span class="fu">theme_tq</span>() <span class="sc">+</span></span>
-<span id="cb13-13"><a href="#cb13-13"></a>  <span class="fu">labs</span>(</span>
-<span id="cb13-14"><a href="#cb13-14"></a>    <span class="at">title =</span> <span class="st">"Total Sales for Each Model"</span>,</span>
-<span id="cb13-15"><a href="#cb13-15"></a>    <span class="at">x =</span> <span class="st">"Frame Material"</span>, <span class="at">y =</span> <span class="st">"Revenue"</span></span>
-<span id="cb13-16"><a href="#cb13-16"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>model_sales_tbl <span class="sc">%&gt;%</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>  <span class="fu">mutate</span>(<span class="at">category_2 =</span> <span class="fu">as_factor</span>(category_2) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-3"><a href="#cb6-3"></a>           <span class="fu">fct_reorder</span>(total_sales, <span class="at">.fun =</span> max) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-4"><a href="#cb6-4"></a>           <span class="fu">fct_rev</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a>  </span>
+<span id="cb6-6"><a href="#cb6-6"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(frame_material, total_sales)) <span class="sc">+</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a>  <span class="fu">geom_violin</span>() <span class="sc">+</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">color =</span> <span class="st">"#2c3e50"</span>) <span class="sc">+</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a>  <span class="co">#coord_flip() +</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> category_2) <span class="sc">+</span></span>
+<span id="cb6-11"><a href="#cb6-11"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">dollar_format</span>(<span class="at">scale =</span> <span class="fl">1e-6</span>, <span class="at">suffix =</span> <span class="st">"M"</span>, <span class="at">accuracy =</span> <span class="fl">0.1</span>)) <span class="sc">+</span></span>
+<span id="cb6-12"><a href="#cb6-12"></a>  tidyquant<span class="sc">::</span><span class="fu">theme_tq</span>() <span class="sc">+</span></span>
+<span id="cb6-13"><a href="#cb6-13"></a>  <span class="fu">labs</span>(</span>
+<span id="cb6-14"><a href="#cb6-14"></a>    <span class="at">title =</span> <span class="st">"Total Sales for Each Model"</span>,</span>
+<span id="cb6-15"><a href="#cb6-15"></a>    <span class="at">x =</span> <span class="st">"Frame Material"</span>, <span class="at">y =</span> <span class="st">"Revenue"</span></span>
+<span id="cb6-16"><a href="#cb6-16"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>#&gt; Registered S3 method overwritten by 'quantmod':
 #&gt;   method            from
@@ -342,8 +300,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>bike_features_tbl <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"bike_features_tbl.rds"</span>)</span>
-<span id="cb18-2"><a href="#cb18-2"></a><span class="fu">glimpse</span>(bike_features_tbl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>bike_features_tbl <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"bike_features_tbl.rds"</span>)</span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="fu">glimpse</span>(bike_features_tbl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; Rows: 231
 #&gt; Columns: 67
@@ -415,21 +373,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 #&gt; $ `Manuals and Accessories 8` &lt;chr&gt; "", "", "", "", "", "", "", "", "", "", ""~
 #&gt; $ `Brake Rotor`               &lt;list&gt; "Shimano RT800", "SRAM Centerline X", "Sh~</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>  <span class="co"># 2.0 TRAINING &amp; </span><span class="al">TEST</span><span class="co"> SETS ----</span></span>
-<span id="cb20-2"><a href="#cb20-2"></a>bike_features_tbl <span class="ot">&lt;-</span> bike_features_tbl <span class="sc">%&gt;%</span> </span>
-<span id="cb20-3"><a href="#cb20-3"></a>  </span>
-<span id="cb20-4"><a href="#cb20-4"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="fu">row_number</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb20-5"><a href="#cb20-5"></a>  </span>
-<span id="cb20-6"><a href="#cb20-6"></a>  <span class="fu">select</span>(id, <span class="fu">everything</span>(), <span class="sc">-</span>url)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>  <span class="co"># 2.0 TRAINING &amp; </span><span class="al">TEST</span><span class="co"> SETS ----</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a>bike_features_tbl <span class="ot">&lt;-</span> bike_features_tbl <span class="sc">%&gt;%</span> </span>
+<span id="cb13-3"><a href="#cb13-3"></a>  </span>
+<span id="cb13-4"><a href="#cb13-4"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="fu">row_number</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-5"><a href="#cb13-5"></a>  </span>
+<span id="cb13-6"><a href="#cb13-6"></a>  <span class="fu">select</span>(id, <span class="fu">everything</span>(), <span class="sc">-</span>url)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-hash="02_supervised_ML_regression_cache/html/unnamed-chunk-3_481d98e30d2a16a03327169849653bd0">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="co"># Create a recipe object</span></span>
-<span id="cb21-2"><a href="#cb21-2"></a>bike_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(price <span class="sc">~</span> frame_material <span class="sc">+</span> category_2 <span class="sc">+</span> model, <span class="at">data =</span> bike_orderlines_tbl) <span class="sc">%&gt;%</span> <span class="co">#Predict price from frame_material, category_2 and model</span></span>
-<span id="cb21-3"><a href="#cb21-3"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal</span>(),<span class="sc">-</span>frame_material,<span class="sc">-</span>category_2,<span class="sc">-</span>model,<span class="at">one_hot =</span> T) <span class="sc">%&gt;%</span> <span class="co">#Remove all others</span></span>
-<span id="cb21-4"><a href="#cb21-4"></a>  <span class="fu">prep</span>() <span class="co">#Estimate the required parameters</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="co"># Create a recipe object</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a>bike_recipe <span class="ot">&lt;-</span> <span class="fu">recipe</span>(price <span class="sc">~</span> frame_material <span class="sc">+</span> category_2 <span class="sc">+</span> model, <span class="at">data =</span> bike_orderlines_tbl) <span class="sc">%&gt;%</span> <span class="co">#Predict price from frame_material, category_2 and model</span></span>
+<span id="cb14-3"><a href="#cb14-3"></a>  <span class="fu">step_dummy</span>(<span class="fu">all_nominal</span>(),<span class="sc">-</span>frame_material,<span class="sc">-</span>category_2,<span class="sc">-</span>model,<span class="at">one_hot =</span> T) <span class="sc">%&gt;%</span> <span class="co">#Remove all others</span></span>
+<span id="cb14-4"><a href="#cb14-4"></a>  <span class="fu">prep</span>() <span class="co">#Estimate the required parameters</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-hash="02_supervised_ML_regression_cache/html/unnamed-chunk-4_e0d9bbbfd5aa052c5452c2b44bfea003">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>bike_orderlines_tbl <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(category_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="02_supervised_ML_regression_cache/html/unnamed-chunk-4_d4424c42cb19e66264d6cfa3f98894c4">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>bike_orderlines_tbl <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(category_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -438,13 +396,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </script>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="co"># run both following commands at the same time</span></span>
-<span id="cb23-2"><a href="#cb23-2"></a><span class="fu">set.seed</span>(<span class="at">seed =</span> <span class="dv">1113</span>)</span>
-<span id="cb23-3"><a href="#cb23-3"></a>split_obj <span class="ot">&lt;-</span> rsample<span class="sc">::</span><span class="fu">initial_split</span>(bike_orderlines_tbl, <span class="at">prop   =</span> <span class="fl">0.80</span>, </span>
-<span id="cb23-4"><a href="#cb23-4"></a>                                                       <span class="at">strata =</span> <span class="st">"category_2"</span>)</span>
-<span id="cb23-5"><a href="#cb23-5"></a></span>
-<span id="cb23-6"><a href="#cb23-6"></a><span class="co"># Check if testing contains all category_2 values</span></span>
-<span id="cb23-7"><a href="#cb23-7"></a>split_obj <span class="sc">%&gt;%</span> <span class="fu">training</span>() <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(category_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">set.seed</span>(<span class="at">seed =</span> <span class="dv">1113</span>)</span>
+<span id="cb16-2"><a href="#cb16-2"></a>split_obj <span class="ot">&lt;-</span> rsample<span class="sc">::</span><span class="fu">initial_split</span>(bike_orderlines_tbl, <span class="at">prop   =</span> <span class="fl">0.80</span>, </span>
+<span id="cb16-3"><a href="#cb16-3"></a>                                                       <span class="at">strata =</span> <span class="st">"category_2"</span>)</span>
+<span id="cb16-4"><a href="#cb16-4"></a></span>
+<span id="cb16-5"><a href="#cb16-5"></a><span class="co"># Check if testing contains all category_2 values</span></span>
+<span id="cb16-6"><a href="#cb16-6"></a>split_obj <span class="sc">%&gt;%</span> <span class="fu">training</span>() <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(category_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -453,7 +410,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </script>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>split_obj <span class="sc">%&gt;%</span> <span class="fu">testing</span>() <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(category_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>split_obj <span class="sc">%&gt;%</span> <span class="fu">testing</span>() <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(category_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -462,35 +419,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </script>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="co"># Assign training and test data</span></span>
-<span id="cb25-2"><a href="#cb25-2"></a>train_tbl <span class="ot">&lt;-</span> <span class="fu">training</span>(split_obj)</span>
-<span id="cb25-3"><a href="#cb25-3"></a>test_tbl  <span class="ot">&lt;-</span> <span class="fu">testing</span>(split_obj)</span>
-<span id="cb25-4"><a href="#cb25-4"></a></span>
-<span id="cb25-5"><a href="#cb25-5"></a><span class="co"># We have to remove spaces and dashes from the column names</span></span>
-<span id="cb25-6"><a href="#cb25-6"></a>train_tbl <span class="ot">&lt;-</span> train_tbl <span class="sc">%&gt;%</span> <span class="fu">set_names</span>(<span class="fu">str_replace_all</span>(<span class="fu">names</span>(train_tbl), <span class="st">" |-"</span>, <span class="st">"_"</span>))</span>
-<span id="cb25-7"><a href="#cb25-7"></a>test_tbl  <span class="ot">&lt;-</span> test_tbl  <span class="sc">%&gt;%</span> <span class="fu">set_names</span>(<span class="fu">str_replace_all</span>(<span class="fu">names</span>(test_tbl),  <span class="st">" |-"</span>, <span class="st">"_"</span>))</span>
-<span id="cb25-8"><a href="#cb25-8"></a></span>
-<span id="cb25-9"><a href="#cb25-9"></a>train_transformed_tbl <span class="ot">&lt;-</span> <span class="fu">bake</span>(bike_recipe, <span class="at">new_data =</span> train_tbl) <span class="co">#Create training data set</span></span>
-<span id="cb25-10"><a href="#cb25-10"></a>test_transformed_tbl <span class="ot">&lt;-</span> <span class="fu">bake</span>(bike_recipe, <span class="at">new_data =</span> test_tbl) <span class="co">#Create testing data set</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="co"># Assign training and test data</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a>train_tbl <span class="ot">&lt;-</span> <span class="fu">training</span>(split_obj)</span>
+<span id="cb18-3"><a href="#cb18-3"></a>test_tbl  <span class="ot">&lt;-</span> <span class="fu">testing</span>(split_obj)</span>
+<span id="cb18-4"><a href="#cb18-4"></a></span>
+<span id="cb18-5"><a href="#cb18-5"></a><span class="co"># remove spaces and dashes from the column names</span></span>
+<span id="cb18-6"><a href="#cb18-6"></a>train_tbl <span class="ot">&lt;-</span> train_tbl <span class="sc">%&gt;%</span> <span class="fu">set_names</span>(<span class="fu">str_replace_all</span>(<span class="fu">names</span>(train_tbl), <span class="st">" |-"</span>, <span class="st">"_"</span>))</span>
+<span id="cb18-7"><a href="#cb18-7"></a>test_tbl  <span class="ot">&lt;-</span> test_tbl  <span class="sc">%&gt;%</span> <span class="fu">set_names</span>(<span class="fu">str_replace_all</span>(<span class="fu">names</span>(test_tbl),  <span class="st">" |-"</span>, <span class="st">"_"</span>))</span>
+<span id="cb18-8"><a href="#cb18-8"></a></span>
+<span id="cb18-9"><a href="#cb18-9"></a>train_transformed_tbl <span class="ot">&lt;-</span> <span class="fu">bake</span>(bike_recipe, <span class="at">new_data =</span> train_tbl) <span class="co">#Create training and test data sets</span></span>
+<span id="cb18-10"><a href="#cb18-10"></a>test_transformed_tbl <span class="ot">&lt;-</span> <span class="fu">bake</span>(bike_recipe, <span class="at">new_data =</span> test_tbl) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-hash="02_supervised_ML_regression_cache/html/unnamed-chunk-5_01e1ebe364af1861cc9b12006aa3f369">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>model_01_linear_lm_simple <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>(<span class="at">mode =</span> <span class="st">"regression"</span>) <span class="sc">%&gt;%</span> <span class="co">#Create linear regression model</span></span>
-<span id="cb26-2"><a href="#cb26-2"></a>    <span class="fu">set_engine</span>(<span class="st">"lm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>model_01_linear_lm_simple <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>(<span class="at">mode =</span> <span class="st">"regression"</span>) <span class="sc">%&gt;%</span> <span class="co">#Create linear regression model</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a>    <span class="fu">set_engine</span>(<span class="st">"lm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-hash="02_supervised_ML_regression_cache/html/unnamed-chunk-6_7f655bf8707dff639e37518649d8b0ab">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">library</span>(workflows)</span>
-<span id="cb27-2"><a href="#cb27-2"></a></span>
-<span id="cb27-3"><a href="#cb27-3"></a><span class="co">#Creating workflow</span></span>
-<span id="cb27-4"><a href="#cb27-4"></a>workflow <span class="ot">&lt;-</span> <span class="fu">workflow</span>(<span class="at">preprocessor =</span> <span class="cn">NULL</span>, <span class="at">spec =</span> <span class="cn">NULL</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-5"><a href="#cb27-5"></a>  workflows<span class="sc">::</span><span class="fu">add_recipe</span>(bike_recipe) <span class="sc">%&gt;%</span> <span class="co">#Adding recipe</span></span>
-<span id="cb27-6"><a href="#cb27-6"></a>  workflows<span class="sc">::</span><span class="fu">add_model</span>(model_01_linear_lm_simple) <span class="co">#Adding model</span></span>
-<span id="cb27-7"><a href="#cb27-7"></a></span>
-<span id="cb27-8"><a href="#cb27-8"></a>fitted_workflow <span class="ot">&lt;-</span> <span class="fu">fit</span>(workflow, train_transformed_tbl) <span class="co">#Estimate model parameters from training set</span></span>
-<span id="cb27-9"><a href="#cb27-9"></a></span>
-<span id="cb27-10"><a href="#cb27-10"></a>metrics <span class="ot">&lt;-</span> fitted_workflow <span class="sc">%&gt;%</span></span>
-<span id="cb27-11"><a href="#cb27-11"></a>           <span class="fu">predict</span>(<span class="at">new_data =</span> test_transformed_tbl) <span class="sc">%&gt;%</span> <span class="co">#Predict from test data set</span></span>
-<span id="cb27-12"><a href="#cb27-12"></a>           <span class="fu">bind_cols</span>(test_transformed_tbl <span class="sc">%&gt;%</span> <span class="fu">select</span>(price)) <span class="sc">%&gt;%</span></span>
-<span id="cb27-13"><a href="#cb27-13"></a>           yardstick<span class="sc">::</span><span class="fu">metrics</span>(<span class="at">truth =</span> price, <span class="at">estimate =</span> .pred) <span class="sc">%&gt;%</span> <span class="fu">print</span>() <span class="co">#Print yardstick metrics</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">library</span>(workflows)</span>
+<span id="cb20-2"><a href="#cb20-2"></a></span>
+<span id="cb20-3"><a href="#cb20-3"></a><span class="co">#Creating workflow</span></span>
+<span id="cb20-4"><a href="#cb20-4"></a>workflow <span class="ot">&lt;-</span> <span class="fu">workflow</span>(<span class="at">preprocessor =</span> <span class="cn">NULL</span>, <span class="at">spec =</span> <span class="cn">NULL</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-5"><a href="#cb20-5"></a>  workflows<span class="sc">::</span><span class="fu">add_recipe</span>(bike_recipe) <span class="sc">%&gt;%</span> <span class="co">#Adding recipe</span></span>
+<span id="cb20-6"><a href="#cb20-6"></a>  workflows<span class="sc">::</span><span class="fu">add_model</span>(model_01_linear_lm_simple) <span class="co">#Adding model</span></span>
+<span id="cb20-7"><a href="#cb20-7"></a></span>
+<span id="cb20-8"><a href="#cb20-8"></a>fitted_workflow <span class="ot">&lt;-</span> <span class="fu">fit</span>(workflow, train_transformed_tbl) <span class="co">#Estimate model parameters from training set</span></span>
+<span id="cb20-9"><a href="#cb20-9"></a></span>
+<span id="cb20-10"><a href="#cb20-10"></a>metrics <span class="ot">&lt;-</span> fitted_workflow <span class="sc">%&gt;%</span></span>
+<span id="cb20-11"><a href="#cb20-11"></a>           <span class="fu">predict</span>(<span class="at">new_data =</span> test_transformed_tbl) <span class="sc">%&gt;%</span> <span class="co">#Predict from test data set</span></span>
+<span id="cb20-12"><a href="#cb20-12"></a>           <span class="fu">bind_cols</span>(test_transformed_tbl <span class="sc">%&gt;%</span> <span class="fu">select</span>(price)) <span class="sc">%&gt;%</span></span>
+<span id="cb20-13"><a href="#cb20-13"></a>           yardstick<span class="sc">::</span><span class="fu">metrics</span>(<span class="at">truth =</span> price, <span class="at">estimate =</span> .pred) <span class="sc">%&gt;%</span> <span class="fu">print</span>() <span class="co">#Print yardstick metrics</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>#&gt; Warning in predict.lm(object = object$fit, newdata = new_data, type =
 #&gt; "response"): prediction from a rank-deficient fit may be misleading</code></pre>
@@ -756,7 +713,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","loop":true,"closeEffect":"zoom","descPosition":"bottom","openEffect":"zoom"});</script>
+<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","closeEffect":"zoom","selector":".lightbox","descPosition":"bottom","loop":true});</script>
 
 
 </body></html>
