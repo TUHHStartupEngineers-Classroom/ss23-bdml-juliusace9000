@@ -16,8 +16,8 @@ The business case is not uploaded because it does not run without error messages
 library(h2o)
 library(tidyverse)
 library(rsample)
-library(recipes)
 library(readxl)
+library(recipes)
 
 #Load the training & test dataset
 employee_attrition_tbl          <- read_csv("product_backorders.csv")
@@ -160,10 +160,10 @@ best_grid_model <- h2o.getModel(deeplearning_grid_01@model_ids[[1]])
 
 best_grid_model %>% h2o.auc(train = T, valid = T, xval = T)
 
-best_grid_model %>% h2o.saveModel(path = "04_Modeling/h20_models/",force=TRUE)
+best_grid_model %>% h2o.saveModel(path = "h20_models/",force=TRUE)
 
-h2o.getModel(deeplearning_grid_01@model_ids[[2]]) %>% h2o.saveModel(path = "04_Modeling/h20_models/",force=TRUE)
-h2o.getModel(deeplearning_grid_01@model_ids[[3]]) %>% h2o.saveModel(path = "04_Modeling/h20_models/",force=TRUE)
+h2o.getModel(deeplearning_grid_01@model_ids[[2]]) %>% h2o.saveModel(path = "h20_models/",force=TRUE)
+h2o.getModel(deeplearning_grid_01@model_ids[[3]]) %>% h2o.saveModel(path = "h20_models/",force=TRUE)
 ```
 
 ## 3. Visualize the trade of between the precision and the recall and the optimal threshold
@@ -214,7 +214,7 @@ load_model_performance_metrics <- function(path, test_tbl) {
     
 }
 
-model_metrics_tbl <- fs::dir_info(path = "04_Modeling/h20_models/") %>%
+model_metrics_tbl <- fs::dir_info(path = "h20_models/") %>%
     select(path) %>%
     mutate(metrics = map(path, load_model_performance_metrics, test_tbl)) %>%
     unnest(cols = metrics)
@@ -222,7 +222,7 @@ model_metrics_tbl <- fs::dir_info(path = "04_Modeling/h20_models/") %>%
 model_metrics_tbl %>%
     mutate(
         # Extract the model names
-        path = str_split(path, pattern = "/", simplify = T)[,3] %>% as_factor(),
+        path = str_split(path, pattern = "/", simplify = T)[,2] %>% as_factor(),
         auc  = auc %>% round(3) %>% as.character() %>% as_factor()
         ) %>%
     ggplot(aes(fpr, tpr, color = path, linetype = auc)) +
@@ -258,14 +258,14 @@ load_model_performance_metrics <- function(path, test_tbl) {
     
 }
 
-model_metrics_tbl <- fs::dir_info(path = "04_Modeling/h20_models/") %>%
+model_metrics_tbl <- fs::dir_info(path = "h20_models/") %>%
     select(path) %>%
     mutate(metrics = map(path, load_model_performance_metrics, test_tbl)) %>%
     unnest(cols = metrics)
 
 model_metrics_tbl %>%
     mutate(
-        path = str_split(path, pattern = "/", simplify = T)[,3] %>% as_factor(),
+        path = str_split(path, pattern = "/", simplify = T)[,2] %>% as_factor(),
         auc  = auc %>% round(3) %>% as.character() %>% as_factor()
     ) %>%
     ggplot(aes(recall, precision, color = path, linetype = auc)) +

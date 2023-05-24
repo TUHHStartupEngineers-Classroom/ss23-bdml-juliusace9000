@@ -9,20 +9,11 @@ output:
 The second challenge/businesscase
 
 ```{r}
-# Standard
 library(tidyverse)
-
-# Modeling
 library(parsnip)
-
-# Preprocessing & Sampling
 library(recipes)
 library(rsample)
-
-# Modeling Error Metrics
 library(yardstick)
-
-# Plotting Decision Trees
 library(rpart.plot)
 ```
 
@@ -80,7 +71,6 @@ bike_recipe <- recipe(price ~ frame_material + category_2 + model, data = bike_o
 ```{r}
 bike_orderlines_tbl %>% distinct(category_2)
 
-# run both following commands at the same time
 set.seed(seed = 1113)
 split_obj <- rsample::initial_split(bike_orderlines_tbl, prop   = 0.80, 
                                                        strata = "category_2")
@@ -93,12 +83,12 @@ split_obj %>% testing() %>% distinct(category_2)
 train_tbl <- training(split_obj)
 test_tbl  <- testing(split_obj)
 
-# We have to remove spaces and dashes from the column names
+# remove spaces and dashes from the column names
 train_tbl <- train_tbl %>% set_names(str_replace_all(names(train_tbl), " |-", "_"))
 test_tbl  <- test_tbl  %>% set_names(str_replace_all(names(test_tbl),  " |-", "_"))
 
-train_transformed_tbl <- bake(bike_recipe, new_data = train_tbl) #Create training data set
-test_transformed_tbl <- bake(bike_recipe, new_data = test_tbl) #Create testing data set
+train_transformed_tbl <- bake(bike_recipe, new_data = train_tbl) #Create training and test data sets
+test_transformed_tbl <- bake(bike_recipe, new_data = test_tbl) 
 ```
 
 ```{r}

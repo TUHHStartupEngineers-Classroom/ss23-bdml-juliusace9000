@@ -91,7 +91,7 @@ test_tbl  <- bake(recipe_obj, new_data = test_readable_tbl)
 
 h2o.init()
 
-automl_leader <- h2o.loadModel("04_Modeling/h20_models/DRF_1_AutoML_28_20230520_183822")
+automl_leader <- h2o.loadModel("StackedEnsemble_AllModels_3_AutoML_1_20230524_103830")
 automl_leader
 
 # 3. LIME ----

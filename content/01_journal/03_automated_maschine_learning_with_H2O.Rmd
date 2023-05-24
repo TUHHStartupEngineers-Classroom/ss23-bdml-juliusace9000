@@ -10,9 +10,7 @@ output:
 # Business case (Part I)
 ```{r}
 library(h2o)
-
-# To launch H2O locally with default initialization arguments, use the following: 
-h2o.init()
+h2o.init() #starting h2o
 ```
 
 ```{r}
@@ -420,26 +418,25 @@ employee_attrition_tbl %>%
 
 # Challenge (Part I)
 ## Question 1 | What can you deduce about the interaction between Monthly Income and Attrition?
-| There is a big spike of people having attrition at the low end of the monthly income spectrum far greater than people having no attrition with low monthly income. This indicates that monthly income has a relatively strong affect on attrition.
+| The data suggests a significant spike in attrition among individuals with lower monthly incomes, indicating a strong correlation between monthly income and attrition. In contrast, there is a relatively lower number of individuals with low monthly incomes who do not experience attrition.
 ## Question 2 | What can you deduce about the interaction between Percent Salary Hike and Attrition?
-| The attrition graph depending on the percent salary hike is nearly identical for people with attrition and without. Meaning a percent salary hike has very little effect on attrition.
+| The attrition patterns related to percent salary hike are nearly identical for individuals with and without attrition. This similarity indicates that the percent salary hike has minimal impact on attrition.
 ## Question 3 | What can you deduce about the interaction between Stock Option Level and Attrition?
-| The attrition vs. stock option level graph shows that people having a stock option level of 1 or to a lesser extend 2 are much less likely to have high attrition, meaning there could be a positive effect between the stock option level and attrition for the employer.
+| The attrition rates based on stock option level reveal that individuals with a stock option level of 1, and to a lesser extent 2, are less likely to experience high attrition. This suggests a potential positive correlation between stock option level and attrition for the employer.
 ## Question 4 | What can you deduce about the interaction between Environment Satisfaction and Attrition?
-| First of all, the satisfaction levels of the survey seemed to be clumped in certain levels which is likely the result of some kind of numerical scale being used for this survey (Rate from 1 to 4 for example). Considering that, there is an upward trend in the number of people having no attrition with higher satisfaction.
+| The distribution of satisfaction levels in the survey appears to be clustered, likely due to the use of a numerical scale (e.g., rating from 1 to 4). Considering this, there is an upward trend in the number of individuals without attrition as the satisfaction levels increase.
 ## Question 5 | What can you deduce about the interaction between Work Life Balance and Attrition
-| The work life balance seems to indicate a stronger connection with attrition, with people rating their work life balance more positively having less attrition.
+| There appears to be a stronger association between work-life balance and attrition, with individuals who rate their work-life balance more positively experiencing lower attrition rates.
 ## Question 6 | What Can you deduce about the interaction between Job Involvement and Attrition?
-| People that are more involved in the job are less likely to have attrition.
+| Individuals who exhibit higher job involvement are less likely to experience attrition.
 ## Question 7 | What can you deduce about the interaction between Over Time and Attrition?
-| Roughly the same amount of people that have attrition do and do not perform overtime. But as a percentage, the people doing overtime are much more likely to have attrition.
+| While the absolute numbers of individuals with and without attrition who perform overtime are similar, the percentage of individuals performing overtime is significantly higher among those who experience attrition. This indicates that individuals engaging in overtime work are more prone to attrition.
 ## Question 8 | What can you deduce about the interaction between Training Times Last Year and Attrition
-| There is a slight trend, that more training time results in less attrition but as far as I can tell very minor.
+| There is a slight trend suggesting that increased training time is associated with lower attrition rates, although the effect appears to be minor.
 ## Question 9 | What can you deduce about the interaction between Years At Company and Attrition
-| Regarding years at the company for very new people the attrition is much higher than for those that are very long with the company.
-| Crucially those that stay long have very low attrition, since most likely those with high attrition left at some point, so the data is inherently somewhat skewed.
+| Regarding years at the company, attrition rates are notably higher among newly hired individuals compared to those who have been with the company for an extended period. Additionally, individuals with longer tenures exhibit significantly lower attrition rates. It's important to note that the data may be skewed since individuals with high attrition likely left the company at some point.
 ## Question 10 | What can you deduce about the interaction between Years Since Last Promotion and Attrition?
-| Years since last promotion seem to have a rather small affect on attrition but the small bump in attrition if people are longer with the company is noteworthy, meaning that people that stayed with the company for an extended amount of time without a promotion start to get more attrition.
+| Years since the last promotion have a relatively small effect on attrition. However, there is a slight increase in attrition among individuals who have been with the company for an extended period without receiving a promotion. This indicates that prolonged periods without promotions may contribute to higher attrition rates.
 
 # Business case (Part II)
 ```{r}
@@ -469,9 +466,7 @@ definitions_tbl
 
 definitions_list <- definitions_tbl %>% 
   
-  # Mapping over lists
-  
-  # Split into multiple tibbles
+  # Mapping over lists and Split into multiple tibbles
   split(.$column_name) %>%
   # Remove column_name
   map(~ select(., -column_name)) %>%
@@ -622,7 +617,7 @@ slotNames(automl_models_h2o)
 automl_models_h2o@leaderboard
 automl_models_h2o@leader
 # Depending on the algorithm, the output will be different
-h2o.getModel("StackedEnsemble_AllModels_4_AutoML_1_20230520_153140")
+h2o.getModel("StackedEnsemble_AllModels_3_AutoML_1_20230524_103830")
 
 # Extracts and H2O model name by a position so can more easily use h2o.getModel()
 extract_h2o_model_name_by_position <- function(h2o_leaderboard, n = 1, verbose = T) {
@@ -641,14 +636,14 @@ extract_h2o_model_name_by_position <- function(h2o_leaderboard, n = 1, verbose =
 automl_models_h2o@leaderboard %>% 
   extract_h2o_model_name_by_position(6) %>% 
   h2o.getModel()
-  h2o.saveModel(path = "")
-#h2o.getModel("StackedEnsemble_AllModels_4_AutoML_1_20230520_153140") %>% 
-#  h2o.saveModel(path = "")
+  #h2o.saveModel(path = "")
+h2o.getModel("StackedEnsemble_AllModels_3_AutoML_1_20230524_103830") %>% 
+  h2o.saveModel(path = "./", force = TRUE)
 
-h2o.loadModel("StackedEnsemble_AllModels_4_AutoML_1_20230520_153140")
+h2o.loadModel("StackedEnsemble_AllModels_3_AutoML_1_20230524_103830")
 
 # Choose whatever model you want
-stacked_ensemble_h2o <- h2o.loadModel("StackedEnsemble_AllModels_4_AutoML_1_20230520_153140")
+stacked_ensemble_h2o <- h2o.loadModel("StackedEnsemble_AllModels_3_AutoML_1_20230524_103830")
 stacked_ensemble_h2o
 
 predictions <- h2o.predict(stacked_ensemble_h2o, newdata = as.h2o(test_tbl))
@@ -658,7 +653,7 @@ typeof(predictions)
 
 predictions_tbl <- predictions %>% as_tibble()
 
-deep_learning_h2o <- h2o.loadModel("StackedEnsemble_AllModels_4_AutoML_1_20230520_153140")
+deep_learning_h2o <- h2o.loadModel("StackedEnsemble_AllModels_3_AutoML_1_20230524_103830")
 
 # To see all possible parameters
 #?h2o.deeplearning
